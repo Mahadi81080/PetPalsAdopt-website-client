@@ -10,6 +10,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import SocialLogin from "../Shared/SocialLogin/SocialLogin";
 
 export function Login() {
   const { singIn } = useAuth();
@@ -85,7 +86,15 @@ export function Login() {
               value="sign In"
               className=" py-2 rounded-lg text-white bg-[#3498db] mx-auto w-24"
             />
-            <Typography variant="small" className="mt-6 flex justify-center">
+              <div className="flex items-center pt-4 space-x-1">
+                <div className="flex-1 h-px sm:w-16 dark:bg-gray-300"></div>
+                <p className="px-3 text-sm dark:text-gray-600">
+                  Login with social accounts
+                </p>
+                <div className="flex-1 h-px sm:w-16 dark:bg-gray-300"></div>
+              </div>
+               <SocialLogin></SocialLogin>
+            <Typography variant="small" className="flex justify-center">
               Don&apos;t have an account?
               <Link to="/signUp">
                 <Typography

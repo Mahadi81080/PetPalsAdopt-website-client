@@ -6,24 +6,26 @@ import {
   Input,
 } from "@material-tailwind/react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useAuth from "../Hooks/useAuth";
+import axios from "axios";
 
 export function Register() {
   const{creatUser,userUpdateProfile}=useAuth()
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
     const { email, password } = data;
-     creatUser(email, password)
+    creatUser(email, password)
       .then((result) => {
         console.log(result);
-        toast.success('Registration successfull')
         userUpdateProfile(data.name, data.photoURL)
           .then(() => {
             // create user entry in the database
@@ -31,7 +33,14 @@ export function Register() {
               name: data.name,
               email: data.email,
             };
-            console.log("User info:", userInfo);
+            axios.post(`${import.meta.env.VITE_API_URL}/users`, userInfo).then((res) => {
+              if (res.data.insertedId) {
+                console.log("User added to the database");
+                reset();
+                toast.success("Registration successful!");
+                navigate("/");
+              }
+            });
           })
           .catch((error) => {
             console.log(error);
