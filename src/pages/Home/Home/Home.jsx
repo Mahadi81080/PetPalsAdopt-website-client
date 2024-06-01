@@ -1,10 +1,12 @@
-import { NavbarDark } from "../../Shared/Navbar/Navbar";
+import { StickyNavbar } from "../../Shared/Navbar/Navbar";
+import Banner from "../Banner/Banner";
+ 
 
 const Home = () => {
   return (
     <div>
-      <NavbarDark></NavbarDark>
-      <h2>This is home section</h2>
+      <StickyNavbar></StickyNavbar>
+     <Banner></Banner>
     </div>
   );
 };

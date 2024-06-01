@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.mySwiper .swiper-pagination {
+  position: relative;
+}
+.mySwiper .swiper-pagination-bullet {
+  margin-top: 50px !important;
+}
