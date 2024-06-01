@@ -61,7 +61,7 @@ function ProfileMenu({ profileImageUrl, userName, onLogout }) {
         </Button>
       </MenuHandler>
       <MenuList className="p-1">
-        {profileMenuItems.map(({ label, icon }) => (
+        {profileMenuItems.map(({ label, icon }, ) => (
           <MenuItem
             key={label}
             onClick={closeMenu}
