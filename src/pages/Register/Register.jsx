@@ -53,7 +53,7 @@ export function Register() {
   };
   return (
     <div className="mt-28">
-      <div className="bg-[#3498db] py-20 space-y-2 text-white">
+      <div className="bg-[#3498db] py-20 space-y-2 text-white text-center">
         <h2 className="text-6xl">Creat Account</h2>
         <div className="text-lg">
           <Link to="/">Home</Link> / Creat Account

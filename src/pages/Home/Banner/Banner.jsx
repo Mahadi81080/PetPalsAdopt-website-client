@@ -9,7 +9,7 @@ import img3 from "../../../assets/banner/ryan-walton-AbNO2iejoXA-unsplash.jpg";
 
 const Banner = () => {
   return (
-    <div className="mt-28 w-full">
+    <div className="mt-20 w-full">
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
@@ -24,7 +24,7 @@ const Banner = () => {
         className="mySwiper"
       >
         <SwiperSlide>
-          <div id="slide1" className="flex justify-center items-center">
+          <div id="slide1" className="flex justify-center items-center gap-8">
             <img src={img1} className="w-1/2 h-[450px] " />
             <div className="w-1/2 space-y-2">
               <div className="space-y-5 text-right">
@@ -45,7 +45,7 @@ const Banner = () => {
           </div>
         </SwiperSlide>
         <SwiperSlide>
-          <div id="slide1" className="flex justify-center items-center">
+          <div id="slide1" className="flex justify-center items-center gap-8">
             <img src={img2} className="w-1/2 h-[450px] " />
             <div className="w-1/2 space-y-2">
               <div className="space-y-5 text-right">
@@ -66,7 +66,7 @@ const Banner = () => {
           </div>
         </SwiperSlide>
         <SwiperSlide>
-          <div id="slide1" className="flex justify-center items-center">
+          <div id="slide1" className="flex justify-center items-center gap-8">
             <img src={img3} className="w-1/2 h-[450px] " />
             <div className="w-1/2 space-y-2">
               <div className="space-y-5 text-right">

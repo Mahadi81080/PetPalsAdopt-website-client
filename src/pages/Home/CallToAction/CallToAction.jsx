@@ -32,7 +32,7 @@ const CallToAction = () => {
         <img
           src={img2}
           alt=""
-          className="w-2/3 absolute top-48 -left-32"
+          className="w-2/3 absolute top-56 -left-32"
         />
       </div>
     </div>

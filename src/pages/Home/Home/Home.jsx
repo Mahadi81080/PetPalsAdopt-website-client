@@ -8,10 +8,12 @@ const Home = () => {
   return (
     <div>
       <StickyNavbar></StickyNavbar>
-      <Banner></Banner>
-      <PetCategory></PetCategory>
-      <CallToAction></CallToAction>
-      <AboutSection></AboutSection>
+      <div className="mx-10">
+        <Banner></Banner>
+        <PetCategory></PetCategory>
+        <CallToAction></CallToAction>
+        <AboutSection></AboutSection>
+      </div>
     </div>
   );
 };
