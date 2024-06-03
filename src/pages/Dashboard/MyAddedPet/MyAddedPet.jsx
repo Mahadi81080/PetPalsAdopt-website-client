@@ -1,0 +1,128 @@
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
+import { FaEdit, FaUsers } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import useAuth from "../../../Hooks/useAuth";
+import Swal from "sweetalert2";
+
+const MyAddedPet = () => {
+  const { user } = useAuth();
+  const [axiosSecure] = useAxiosSecure();
+  const { data: petLists = [],refetch } = useQuery({
+    queryKey: ["petLists"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/petItem");
+      return res.data;
+    },
+  });
+
+  const currentUserEmail = user.email;
+  const currentList = petLists.filter(
+    (item) => item.email === currentUserEmail
+  );
+  console.log(currentList);
+  const handleDelete = (item) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.delete(`/petItem/${item._id}`).then((res) => {
+          if (res.data.deletedCount > 0) {
+            refetch();
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success",
+            });
+          }
+        });
+      }
+    });
+  };
+
+  return (
+    <div>
+      <div className="flex justify-evenly my-4">
+        <h2 className="text-2xl">All Users</h2>
+        <h2 className="text-2xl">Total users: {currentList.length}</h2>
+      </div>
+      <div className="overflow-x-auto my-5 rounded-t-xl">
+        <table className="table">
+          {/* head */}
+          <thead className="bg-[#3498db]">
+            <tr>
+              <th>#</th>
+              <th>Image</th>
+              <th>NAME</th>
+              <th>CATEGORY</th>
+              <th>STATUS</th>
+              <th>UPDATE</th>
+              <th>DELETE</th>
+              <th>ACTION</th>
+            </tr>
+          </thead>
+          <tbody>
+            {/* row 1 */}
+            {currentList.map((item, index) => (
+              <tr key={item._id}>
+                <th>{index + 1}</th>
+                <td>
+                  <div className="flex items-center gap-3">
+                    <div className="avatar">
+                      <div className="mask mask-squircle w-12 h-12">
+                        <img
+                          src={item.image}
+                          alt="Avatar Tailwind CSS Component"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td>{item.name}</td>
+                <td>{item.category}</td>
+                <td>{item.adopted === true ? "Adopted" : "Not Adopted"}</td>
+                <td>
+                  <Link to="/dashboard/update">
+                    {" "}
+                    <button className="p-3 rounded-lg text-white text-lg bg-[#b91c1c]">
+                      <FaEdit />
+                    </button>
+                  </Link>
+                </td>
+                <td>
+                  <button
+                    onClick={() => handleDelete(item)}
+                    className="p-3 rounded-lg text-white text-lg bg-[#b91c1c]"
+                  >
+                    <MdDelete />
+                  </button>
+                </td>
+                <td>
+                  <button
+                    // onClick={() => handleMakeAdmin(user)}
+                    className="bg-[#d1a054] text-white text-lg p-3 rounded-lg"
+                  >
+                    {" "}
+                    <FaUsers />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <ToastContainer></ToastContainer>
+    </div>
+  );
+};
+
+export default MyAddedPet;

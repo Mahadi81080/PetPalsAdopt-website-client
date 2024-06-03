@@ -9,8 +9,9 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import useAuth from "../Hooks/useAuth";
+
 import axios from "axios";
+import useAuth from "../../Hooks/useAuth";
 
 export function Register() {
   const{creatUser,userUpdateProfile}=useAuth()

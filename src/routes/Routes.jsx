@@ -5,6 +5,9 @@ import { Login } from "../pages/Login/Login";
 import { Register } from "../pages/Register/Register";
 import PrivateRoute from "./PrivateRoute";
 import Dashboard from "../layout/Dashboard";
+import AddItems from "../pages/Dashboard/AddItems/AddItems";
+import MyAddedPet from "../pages/Dashboard/MyAddedPet/MyAddedPet";
+import UpdateItem from "../pages/Dashboard/UpdateItem/UpdateItem";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -24,7 +27,7 @@ export const router = createBrowserRouter([
       },
     ],
   },
-// dashboard related route
+  // dashboard related route
   {
     path: "dashboard",
     element: (
@@ -32,67 +35,23 @@ export const router = createBrowserRouter([
         <Dashboard></Dashboard>
       </PrivateRoute>
     ),
-    // children: [
-    //   // Normal users routes
-    //   {
-    //     path: "userHome",
-    //     element: <UserHome></UserHome>,
-    //   },
-    //   {
-    //     path: "cart",
-    //     element: <Cart></Cart>,
-    //   },
-    //   {
-    //     path: "payment",
-    //     element: <Payment></Payment>,
-    //   },
-    //   {
-    //     path: "paymentHistory",
-    //     element: <PaymentHistory></PaymentHistory>,
-    //   },
-    //   // Admin routes
-    //   {
-    //     path: "adminHome",
-    //     element: (
-    //       <AdminRoute>
-    //         <AdminHome></AdminHome>
-    //       </AdminRoute>
-    //     ),
-    //   },
-    //   {
-    //     path: "allUsers",
-    //     element: (
-    //       <AdminRoute>
-    //         <AllUsers></AllUsers>
-    //       </AdminRoute>
-    //     ),
-    //   },
-    //   {
-    //     path: "addItems",
-    //     element: (
-    //       <AdminRoute>
-    //         <AddItems></AddItems>
-    //       </AdminRoute>
-    //     ),
-    //   },
-    //   {
-    //     path: "manageItems",
-    //     element: (
-    //       <AdminRoute>
-    //         <ManageItems></ManageItems>
-    //       </AdminRoute>
-    //     ),
-    //   },
-    //   {
-    //     path: "updateItem/:id",
-    //     element: (
-    //       <AdminRoute>
-    //         <UpdateItem></UpdateItem>
-    //       </AdminRoute>
-    //     ),
-    //     loader: ({ params }) =>
-    //       fetch(`https://bistro-boss-srver.vercel.app/menu/${params.id}`),
-    //   },
-    // ],
+    children: [
+      // Normal users routes
+      {
+        path: "addItems",
+        element: <AddItems></AddItems>,
+      },
+      {
+        path: "myAddedPet",
+        element: <MyAddedPet></MyAddedPet>,
+        // loader:()=>fetch(`${import.meta.env.VITE_API_URL}/petItem`)
+      },
+      {
+        path: "update",
+        element: <UpdateItem></UpdateItem>,
+      },
+
+      // Admin routes
+    ],
   },
 ]);

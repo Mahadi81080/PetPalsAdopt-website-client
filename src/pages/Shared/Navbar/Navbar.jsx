@@ -13,12 +13,12 @@ import {
 } from "@material-tailwind/react";
 import logo from "../../../assets/logo/Orange_and_Black_Playful_Pets_Logo-removebg-preview.png";
 import { Link } from "react-router-dom";
-import useAuth from "../../Hooks/useAuth";
 import {
   ChevronDownIcon,
   PowerIcon,
   UserCircleIcon,
 } from "@heroicons/react/16/solid";
+import useAuth from "../../../Hooks/useAuth";
 
 // profile menu component
 const profileMenuItems = [];
