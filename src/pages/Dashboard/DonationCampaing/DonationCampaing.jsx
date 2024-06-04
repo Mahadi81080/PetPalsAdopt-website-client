@@ -1,18 +1,15 @@
-import { ToastContainer, toast } from "react-toastify";
-import useAxiosPublic from "../../../Hooks/useAxiosPublic";
-import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useForm } from "react-hook-form";
-import useAuth from "../../../Hooks/useAuth";
-
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?&key=${image_hosting_key}`;
 
 const DonationCampaing = () => {
-  const { user } = useAuth();
   const { register, handleSubmit, reset } = useForm();
   const axiosPublic = useAxiosPublic();
   const [axiosSecure] = useAxiosSecure();
-
   const onSubmit = async (data) => {
     console.log(data);
     const imageFile = { image: data.image[0] };
@@ -23,120 +20,93 @@ const DonationCampaing = () => {
     });
     if (res.data.success) {
       // now send menu item data to the server with the image
-      const petItem = {
-        name: data.name,
-        category: data.category,
-        age: data.age,
-        location: data.location,
+      const campaignData = {
         image: res.data.data.display_url,
-        shortDescription: data.short_description,
-        longDescription: data.long_description,
-        date: new Date().toISOString(),
-        adopted: false,
-        email: user.email,
-        userName: user.displayName,
+        maxDonationAmount: data.maxDonationAmount,
+        lastDate: data.lastDate,
+        shortDescription: data.shortDescription,
+        longDescription: data.longDescription,
+        createdAt: new Date().toISOString(),
       };
-      const menuRes = await axiosSecure.post("/petItem", petItem);
+      const menuRes = await axiosSecure.post("/donation", campaignData);
       console.log(menuRes.data);
       if (menuRes.data.insertedId) {
         reset();
-        toast.success(`${data.name} is added this Pet`);
+        toast.success("Donation campaign created successfully!");
       }
     }
     console.log("with image url", res.data);
   };
+
   return (
     <div>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="bg-[#f3f3f3] w-[850px] p-20 mx-auto space-y-4"
+        className="bg-[#f3f3f3] w-[850px] px-20 py-10 mx-auto space-y-4"
       >
-        <label className="form-control w-full">
-          <div className="label">
-            <span className="label-text">Pet name*</span>
-          </div>
-          <input
-            type="text"
-            placeholder="Type here"
-            className="input input-bordered w-full max-w-full"
-            {...register("name", { required: true })}
-          />
-        </label>
+        <div className="text-center mb-8">
+          <h2 className="text-3xl">Create Donation Campaign</h2>
+        </div>
         <div className="flex flex-col lg:flex-row justify-between items-center gap-4">
           <label className="form-control w-full">
             <div className="label">
-              <span className="label-text">Pet Category*</span>
-            </div>
-            <select
-              defaultValue="default"
-              className="select select-bordered w-full"
-              {...register("category", { required: true })}
-            >
-              <option disabled value="default">
-                Category
-              </option>
-              <option value="Cats">Cats </option>
-              <option value="Dogs">Docs</option>
-              <option value="Rabit">Rabbit</option>
-              <option value="Fish">Fish</option>
-              <option value="Bird">Bird</option>
-            </select>
-          </label>
-
-          <label className="form-control w-full">
-            <div className="label">
-              <span className="label-text">Pet age*</span>
+              <span className="label-text">Maximum Donation Amount*</span>
             </div>
             <input
-              type="text"
-              placeholder="Type here"
+              type="number"
+              placeholder="Enter maximum donation amount"
               className="input input-bordered w-full"
-              {...register("age", { required: true })}
+              {...register("maxDonationAmount", { required: true })}
+            />
+          </label>
+          <label className="form-control w-full">
+            <div className="label">
+              <span className="label-text">Last Date of Donation*</span>
+            </div>
+            <input
+              type="date"
+              className="input input-bordered w-full"
+              {...register("lastDate", { required: true })}
             />
           </label>
         </div>
-        <div className="flex flex-col lg:flex-row justify-between items-center gap-4">
+        <div>
           <label className="form-control w-full">
             <div className="label">
               <span className="label-text">Short Description*</span>
             </div>
             <textarea
               className="textarea textarea-bordered h-5"
-              placeholder="Type here"
-              {...register("short_description", { required: true })}
+              placeholder="Enter short description"
+              {...register("shortDescription", { required: true })}
             ></textarea>
           </label>
-
+        </div>
+        <div>
           <label className="form-control w-full">
             <div className="label">
-              <span className="label-text">Pet location*</span>
+              <span className="label-text">Long Description*</span>
             </div>
-            <input
-              type="text"
-              placeholder="Type here"
-              className="input input-bordered w-full"
-              {...register("location", { required: true })}
-            />
+            <textarea
+              className="textarea textarea-bordered h-32"
+              placeholder="Enter long description"
+              {...register("longDescription", { required: true })}
+            ></textarea>
           </label>
         </div>
-        <label className="form-control">
+        <label className="form-control w-full">
           <div className="label">
-            <span className="label-text">Long Description*</span>
+            <span className="label-text">Pet Picture*</span>
           </div>
-          <textarea
-            className="textarea textarea-bordered h-32"
-            placeholder="Type here"
-            {...register("long_description", { required: true })}
-          ></textarea>
-        </label>
-        <div>
           <input
-            {...register("image", { required: true })}
             type="file"
             className="file-input w-full max-w-xs"
+            {...register("image", { required: true })}
           />
-        </div>
-        <button className="btn bg-[#3498db] text-white">Add a Pet</button>
+        </label>
+        <button type="submit" className="btn bg-[#3498db] text-white">
+          Create Donation Campaign
+        </button>
       </form>
       <ToastContainer></ToastContainer>
     </div>

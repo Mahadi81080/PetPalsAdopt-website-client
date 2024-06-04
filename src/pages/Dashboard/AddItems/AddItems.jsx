@@ -8,7 +8,7 @@ const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?&key=${image_hosting_key}`;
 
 const AddItems = () => {
-  const{user}=useAuth()
+  const { user } = useAuth();
   const { register, handleSubmit, reset } = useForm();
   const axiosPublic = useAxiosPublic();
   const [axiosSecure] = useAxiosSecure();
@@ -33,8 +33,8 @@ const AddItems = () => {
         longDescription: data.long_description,
         date: new Date().toISOString(),
         adopted: false,
-        email:user.email,
-        userName:user.displayName,
+        email: user.email,
+        userName: user.displayName,
       };
       const menuRes = await axiosSecure.post("/petItem", petItem);
       console.log(menuRes.data);
@@ -129,13 +129,16 @@ const AddItems = () => {
             {...register("long_description", { required: true })}
           ></textarea>
         </label>
-        <div>
+        <label className="form-control w-full">
+          <div className="label">
+            <span className="label-text">Pet Picture*</span>
+          </div>
           <input
             {...register("image", { required: true })}
             type="file"
             className="file-input w-full max-w-xs"
           />
-        </div>
+        </label>
         <button className="btn bg-[#3498db] text-white">Add a Pet</button>
       </form>
       <ToastContainer></ToastContainer>

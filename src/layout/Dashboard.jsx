@@ -34,7 +34,10 @@ const Dashboard = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/review" className="flex items-center gap-3">
+            <NavLink
+              to="/dashboard/donationCamp"
+              className="flex items-center gap-3"
+            >
               <VscPreview />
               Create Donation Campaign
             </NavLink>

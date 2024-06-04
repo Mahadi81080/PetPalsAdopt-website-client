@@ -55,12 +55,17 @@ const MyAddedPet = () => {
       }
     });
   };
-
+  const getStatusStyle = (adopted) => {
+    return {
+      color: adopted ? "blue" : "red",
+      fontWeight: "bold",
+    };
+  };
   return (
     <div>
       <div className="flex justify-evenly my-4">
-        <h2 className="text-2xl">All Users</h2>
-        <h2 className="text-2xl">Total users: {currentList.length}</h2>
+        <h2 className="text-2xl">All Pet</h2>
+        <h2 className="text-2xl">Total Pets: {currentList.length}</h2>
       </div>
       <div className="overflow-x-auto my-5 rounded-t-xl">
         <table className="table">
@@ -96,8 +101,8 @@ const MyAddedPet = () => {
                 </td>
                 <td>{item.name}</td>
                 <td>{item.category}</td>
-                <td >
-                  {item.adopted === true ? "Adopted" : "Not Adopted"}
+                <td style={getStatusStyle(item.adopted)}>
+                  {item.adopted ? "Adopted" : "Not Adopted"}
                 </td>
                 <td>
                   <Link to={`/dashboard/update/${item._id}`}>
@@ -118,7 +123,11 @@ const MyAddedPet = () => {
                 <td>
                   <button
                     onClick={() => handleMakeAdopt(item)}
-                    className="bg-blue-300 text-white px-2 py-1 rounded-md"
+                    className={
+                      item.adopted
+                        ? "disabled bg-gray-400 px-2 py-1 rounded-md text-white"
+                        : "bg-blue-300 text-white px-2 py-1 rounded-md"
+                    }
                   >
                     {" "}
                     {item.adopted === true ? "Adopted" : "Adopt"}
