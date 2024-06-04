@@ -10,6 +10,7 @@ import MyAddedPet from "../pages/Dashboard/MyAddedPet/MyAddedPet";
 import UpdateItem from "../pages/Dashboard/UpdateItem/UpdateItem";
 import DonationCampaing from "../pages/Dashboard/DonationCampaing/DonationCampaing";
 import MyDonation from "../pages/Dashboard/MyDonation/MyDonation";
+import PetListining from "../pages/PetListining/PetListining";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -27,6 +28,10 @@ export const router = createBrowserRouter([
         path: "/signUp",
         element: <Register></Register>,
       },
+      {
+        path:"/petList",
+        element:<PetListining></PetListining>
+      }
     ],
   },
   // dashboard related route

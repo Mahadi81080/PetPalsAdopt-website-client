@@ -143,9 +143,9 @@ export function StickyNavbar() {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="#" className="flex items-center">
+        <Link to='/petList' href="#" className="flex items-center">
           Pet Listing
-        </a>
+        </Link>
       </Typography>
       <Typography
         as="li"
