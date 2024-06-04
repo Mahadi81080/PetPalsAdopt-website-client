@@ -8,6 +8,8 @@ import Dashboard from "../layout/Dashboard";
 import AddItems from "../pages/Dashboard/AddItems/AddItems";
 import MyAddedPet from "../pages/Dashboard/MyAddedPet/MyAddedPet";
 import UpdateItem from "../pages/Dashboard/UpdateItem/UpdateItem";
+import DonationCampaing from "../pages/Dashboard/DonationCampaing/DonationCampaing";
+import MyDonation from "../pages/Dashboard/MyDonation/MyDonation";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -47,9 +49,18 @@ export const router = createBrowserRouter([
         // loader:()=>fetch(`${import.meta.env.VITE_API_URL}/petItem`)
       },
       {
-        path: "update",
+        path: "update/:id",
         element: <UpdateItem></UpdateItem>,
+        loader:({params})=>fetch(`${import.meta.env.VITE_API_URL}/petItem/${params.id}`)
       },
+      {
+        path:"donationCamp",
+        element:<DonationCampaing></DonationCampaing>
+      },
+      {
+        path:"myDonation",
+        element:<MyDonation></MyDonation>
+      }
 
       // Admin routes
     ],

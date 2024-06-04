@@ -3,15 +3,13 @@ import "react-toastify/dist/ReactToastify.css";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import { FaEdit, FaUsers } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
 import useAuth from "../../../Hooks/useAuth";
 import Swal from "sweetalert2";
 
 const MyAddedPet = () => {
   const { user } = useAuth();
   const [axiosSecure] = useAxiosSecure();
-  const { data: petLists = [],refetch } = useQuery({
+  const { data: petLists = [], refetch } = useQuery({
     queryKey: ["petLists"],
     queryFn: async () => {
       const res = await axiosSecure.get("/petItem");
@@ -24,6 +22,15 @@ const MyAddedPet = () => {
     (item) => item.email === currentUserEmail
   );
   console.log(currentList);
+  const handleMakeAdopt = (item) => {
+    axiosSecure.patch(`/petAdopt/${item._id}`).then((res) => {
+      console.log(res.data);
+      if (res.data.modifiedCount > 0) {
+        refetch();
+        toast.success(`${item.name} pet is Adopted !`);
+      }
+    });
+  };
   const handleDelete = (item) => {
     Swal.fire({
       title: "Are you sure?",
@@ -67,7 +74,7 @@ const MyAddedPet = () => {
               <th>STATUS</th>
               <th>UPDATE</th>
               <th>DELETE</th>
-              <th>ACTION</th>
+              <th>ADOPT</th>
             </tr>
           </thead>
           <tbody>
@@ -89,30 +96,32 @@ const MyAddedPet = () => {
                 </td>
                 <td>{item.name}</td>
                 <td>{item.category}</td>
-                <td>{item.adopted === true ? "Adopted" : "Not Adopted"}</td>
+                <td >
+                  {item.adopted === true ? "Adopted" : "Not Adopted"}
+                </td>
                 <td>
-                  <Link to="/dashboard/update">
+                  <Link to={`/dashboard/update/${item._id}`}>
                     {" "}
-                    <button className="p-3 rounded-lg text-white text-lg bg-[#b91c1c]">
-                      <FaEdit />
+                    <button className="bg-blue-300 text-white px-2 py-1 rounded-md">
+                      Update
                     </button>
                   </Link>
                 </td>
                 <td>
                   <button
                     onClick={() => handleDelete(item)}
-                    className="p-3 rounded-lg text-white text-lg bg-[#b91c1c]"
+                    className="bg-red-300 text-white px-2 py-1 rounded-md"
                   >
-                    <MdDelete />
+                    Delete
                   </button>
                 </td>
                 <td>
                   <button
-                    // onClick={() => handleMakeAdmin(user)}
-                    className="bg-[#d1a054] text-white text-lg p-3 rounded-lg"
+                    onClick={() => handleMakeAdopt(item)}
+                    className="bg-blue-300 text-white px-2 py-1 rounded-md"
                   >
                     {" "}
-                    <FaUsers />
+                    {item.adopted === true ? "Adopted" : "Adopt"}
                   </button>
                 </td>
               </tr>

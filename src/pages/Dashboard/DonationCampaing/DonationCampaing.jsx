@@ -1,21 +1,20 @@
-import { useForm } from "react-hook-form";
-import { useLoaderData } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useForm } from "react-hook-form";
+import useAuth from "../../../Hooks/useAuth";
+
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?&key=${image_hosting_key}`;
 
-const UpdateItem = () => {
-  const { name, category, age, shortDescription, longDescription, location,_id } =
-    useLoaderData();
-  
-    const axiosPublic = useAxiosPublic();
-    const [axiosSecure] = useAxiosSecure();
+const DonationCampaing = () => {
+  const { user } = useAuth();
+  const { register, handleSubmit, reset } = useForm();
+  const axiosPublic = useAxiosPublic();
+  const [axiosSecure] = useAxiosSecure();
 
-  const { register, handleSubmit,reset } = useForm();
   const onSubmit = async (data) => {
+    console.log(data);
     const imageFile = { image: data.image[0] };
     const res = await axiosPublic.post(image_hosting_api, imageFile, {
       headers: {
@@ -23,43 +22,42 @@ const UpdateItem = () => {
       },
     });
     if (res.data.success) {
-        // now send menu item data to the server with the image
-        const petItem = {
-          name: data.name,
-          category: data.category,
-          age: data.age,
-          location: data.location,
-          image: res.data.data.display_url,
-          shortDescription: data.short_description,
-          longDescription: data.long_description,
-          date: new Date().toISOString(),
-          adopted: false,
-        };
-        const menuRes = await axiosSecure.patch(`/petItem/${_id}`, petItem);
-        console.log(menuRes.data);
-        if (menuRes.data.modifiedCount>0) {
-          reset();
-          toast.success('Youe pet information updated');
-        }
+      // now send menu item data to the server with the image
+      const petItem = {
+        name: data.name,
+        category: data.category,
+        age: data.age,
+        location: data.location,
+        image: res.data.data.display_url,
+        shortDescription: data.short_description,
+        longDescription: data.long_description,
+        date: new Date().toISOString(),
+        adopted: false,
+        email: user.email,
+        userName: user.displayName,
+      };
+      const menuRes = await axiosSecure.post("/petItem", petItem);
+      console.log(menuRes.data);
+      if (menuRes.data.insertedId) {
+        reset();
+        toast.success(`${data.name} is added this Pet`);
       }
-      console.log("with image url", res.data);
+    }
+    console.log("with image url", res.data);
   };
   return (
     <div>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="bg-[#f3f3f3] w-[850px] px-20 py-10 mx-auto space-y-4"
+        className="bg-[#f3f3f3] w-[850px] p-20 mx-auto space-y-4"
       >
-        <div className="text-center mb-8">
-          <h2 className="text-3xl">Update Your Pet Information</h2>
-        </div>
         <label className="form-control w-full">
           <div className="label">
             <span className="label-text">Pet name*</span>
           </div>
           <input
             type="text"
-            defaultValue={name}
+            placeholder="Type here"
             className="input input-bordered w-full max-w-full"
             {...register("name", { required: true })}
           />
@@ -74,7 +72,7 @@ const UpdateItem = () => {
               className="select select-bordered w-full"
               {...register("category", { required: true })}
             >
-              <option disabled value={category}>
+              <option disabled value="default">
                 Category
               </option>
               <option value="Cats">Cats </option>
@@ -91,7 +89,7 @@ const UpdateItem = () => {
             </div>
             <input
               type="text"
-              defaultValue={age}
+              placeholder="Type here"
               className="input input-bordered w-full"
               {...register("age", { required: true })}
             />
@@ -104,7 +102,7 @@ const UpdateItem = () => {
             </div>
             <textarea
               className="textarea textarea-bordered h-5"
-              defaultValue={shortDescription}
+              placeholder="Type here"
               {...register("short_description", { required: true })}
             ></textarea>
           </label>
@@ -115,7 +113,7 @@ const UpdateItem = () => {
             </div>
             <input
               type="text"
-              defaultValue={location}
+              placeholder="Type here"
               className="input input-bordered w-full"
               {...register("location", { required: true })}
             />
@@ -127,7 +125,7 @@ const UpdateItem = () => {
           </div>
           <textarea
             className="textarea textarea-bordered h-32"
-            defaultValue={longDescription}
+            placeholder="Type here"
             {...register("long_description", { required: true })}
           ></textarea>
         </label>
@@ -145,4 +143,4 @@ const UpdateItem = () => {
   );
 };
 
-export default UpdateItem;
+export default DonationCampaing;
