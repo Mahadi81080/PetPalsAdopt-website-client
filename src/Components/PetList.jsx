@@ -6,34 +6,37 @@ import {
   CardHeader,
   Typography,
 } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
 
 const PetList = ({ list }) => {
   console.log(list);
   return (
-    <Card className=" w-96 mt-28">
+    <Card className="   mt-6">
       <CardHeader
         color="blue-gray"
-        className=" h-56 flex items-center justify-center"
+        className="h-56 flex items-center justify-center"
       >
-        <img
-          src={list.image}
-          alt="card-image"
-          className=""
-        />
+        <img src={list.image} alt="card-image" />
       </CardHeader>
 
       <CardBody>
         <Typography variant="h5" color="blue-gray" className="mb-2">
-          UI/UX Review Check
+          {list.name}
         </Typography>
-        <Typography>
-          The place is close to Barceloneta Beach and bus stop just 2 min by
-          walk and near to &quot;Naviglio&quot; where you can enjoy the main
-          night life in Barcelona.
+        <Typography className="flex justify-between text-base">
+          <h3>
+            <span className="font-semibold">Location :</span> {list.location}
+          </h3>
+          <h3>
+            <span className="font-semibold">Age :</span> {list.age}
+          </h3>
         </Typography>
       </CardBody>
       <CardFooter className="pt-0">
-        <Button>Read More</Button>
+        <Link to={`/petDetails/${list._id}`}>
+          {" "}
+          <Button className="bg-blue-400">View Details</Button>
+        </Link>
       </CardFooter>
     </Card>
   );

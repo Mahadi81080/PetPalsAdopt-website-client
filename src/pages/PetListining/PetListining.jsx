@@ -12,9 +12,8 @@ const PetListining = () => {
     },
   });
   return (
-    <div>
-      <h2>pet list</h2>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+    <div className="mt-24 mx-10">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-7">
         {petListining.map((list) => (
           <PetList key={list._id} list={list}></PetList>
         ))}
