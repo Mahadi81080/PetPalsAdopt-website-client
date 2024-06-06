@@ -7,6 +7,7 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
+ 
 
 const PetList = ({ list }) => {
   console.log(list);

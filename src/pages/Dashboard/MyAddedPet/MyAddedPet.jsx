@@ -114,14 +114,6 @@ const MyAddedPet = () => {
                 </td>
                 <td>
                   <button
-                    onClick={() => handleDelete(item)}
-                    className="bg-red-300 text-white px-2 py-1 rounded-md"
-                  >
-                    Delete
-                  </button>
-                </td>
-                <td>
-                  <button
                     onClick={() => handleMakeAdopt(item)}
                     className={
                       item.adopted
@@ -131,6 +123,14 @@ const MyAddedPet = () => {
                   >
                     {" "}
                     {item.adopted === true ? "Adopted" : "Adopt"}
+                  </button>
+                </td>
+                <td>
+                  <button
+                    onClick={() => handleDelete(item)}
+                    className="bg-red-300 text-white px-2 py-1 rounded-md"
+                  >
+                    Delete
                   </button>
                 </td>
               </tr>

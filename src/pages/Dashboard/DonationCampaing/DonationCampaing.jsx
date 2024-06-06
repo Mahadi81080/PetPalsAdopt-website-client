@@ -21,6 +21,7 @@ const DonationCampaing = () => {
     if (res.data.success) {
       // now send menu item data to the server with the image
       const campaignData = {
+        name:data.name,
         image: res.data.data.display_url,
         maxDonationAmount: data.maxDonationAmount,
         lastDate: data.lastDate,
@@ -47,6 +48,17 @@ const DonationCampaing = () => {
         <div className="text-center mb-8">
           <h2 className="text-3xl">Create Donation Campaign</h2>
         </div>
+        <label className="form-control w-full">
+          <div className="label">
+            <span className="label-text">Pet Name*</span>
+          </div>
+          <input
+            type="text"
+            placeholder="Enter maximum donation amount"
+            className="input input-bordered w-full"
+            {...register("name", { required: true })}
+          />
+        </label>
         <div className="flex flex-col lg:flex-row justify-between items-center gap-4">
           <label className="form-control w-full">
             <div className="label">

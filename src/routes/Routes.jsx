@@ -12,6 +12,8 @@ import DonationCampaing from "../pages/Dashboard/DonationCampaing/DonationCampai
 import MyDonation from "../pages/Dashboard/MyDonation/MyDonation";
 import PetListining from "../pages/PetListining/PetListining";
 import PetDetails from "../Components/PetDetails";
+import DonationCampaning from "../pages/DonationCampaining/DonationCampaning";
+import DonationDetails from "../Components/DonationDetails";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -37,6 +39,15 @@ export const router = createBrowserRouter([
         path:"/petDetails/:id",
         element:<PrivateRoute><PetDetails></PetDetails></PrivateRoute>,
         loader:({params})=>fetch(`${import.meta.env.VITE_API_URL}/petItem/${params.id}`)
+      },
+      {
+        path:"/donationCampaning",
+        element:<DonationCampaning></DonationCampaning>
+      },
+      {
+        path:"/donationDetails/:id",
+        element:<PrivateRoute><DonationDetails></DonationDetails></PrivateRoute>,
+        loader:({params})=>fetch(`${import.meta.env.VITE_API_URL}/donation/${params.id}`)
       }
     ],
   },

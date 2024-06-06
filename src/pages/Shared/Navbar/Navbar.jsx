@@ -153,9 +153,9 @@ export function StickyNavbar() {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="#" className="flex items-center">
+        <Link to='/donationCampaning' className="flex items-center">
           Donation Campaigns
-        </a>
+        </Link>
       </Typography>
     </ul>
   );

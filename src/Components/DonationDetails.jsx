@@ -1,36 +1,21 @@
-import {
-  Button,
-  Dialog,
-  DialogBody,
-  DialogFooter,
-  DialogHeader,
-  Input,
-} from "@material-tailwind/react";
-import React from "react";
-import { useForm } from "react-hook-form";
 import { useLoaderData } from "react-router-dom";
-import useAuth from "../Hooks/useAuth";
-import useAxiosPublic from "../Hooks/useAxiosPublic";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+ 
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import CheckoutForm from "./CheckoutForm";
 
-const PetDetails = () => {
-  const { user } = useAuth();
-  const axiosPublic = useAxiosPublic();
-  const { register, handleSubmit, reset } = useForm();
+const DonationDetails = () => {
+ 
   const {
     name,
     image,
     longDescription,
     shortDescription,
-    age,
-    location,
-    date,
-    _id,
+    lastDate,
+    maxDonationAmount,
   } = useLoaderData();
-
   // Convert the ISO date string to a JavaScript Date object
-  const dateObj = new Date(date);
+  const dateObj = new Date(lastDate);
   // Format the date to a human-readable string
   const formattedDate = dateObj.toLocaleDateString("en-US", {
     year: "numeric",
@@ -38,35 +23,12 @@ const PetDetails = () => {
     day: "numeric",
   });
 
-  const [open, setOpen] = React.useState(false);
-
-  const handleOpen = () => setOpen(!open);
-
-  const onSubmit = async (data) => {
-    console.log(data);
-    const adoptRequest = {
-      petId: _id,
-      image: image,
-      petName: name,
-      address: data.address,
-      phoneNumber: data.phoneNumber,
-      email: user.email,
-      userName: user.displayName,
-    };
-    const menuRes = await axiosPublic.post("/adoptRequest", adoptRequest);
-    console.log(menuRes.data);
-    if (menuRes.data.insertedId) {
-      reset();
-      toast.success('Submitted your adopt request');
-    }
-    reset();
-  };
-
+  const stripePromise = loadStripe(import.meta.env.VITE_PAYMENT_GATEWAY_PK);
   return (
     <div>
       <div className="mt-20 mx-10">
         <div className="bg-[#b9e8f4] p-20 mb-4 text-center font-extrabold text-3xl">
-          <h2>Pet Details</h2>
+          <h2>Donation Details</h2>
         </div>
         <section className="bg-[#f5f9fa] dark:bg-gray-100 text-gray-100 dark:text-gray-800 ">
           <div className="container flex justify-center  flex-col mx-auto lg:flex-row">
@@ -100,7 +62,7 @@ const PetDetails = () => {
                   <p className="leading-snug">{name}</p>
                 </div>
               </div>
-              <div className="flex items-center space-x-2 sm:space-x-4">
+              <div className="flex space-x-2 sm:space-x-4 ">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -115,12 +77,16 @@ const PetDetails = () => {
                     d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
                   ></path>
                 </svg>
-                <div className="flex gap-5 items-center ">
-                  <p className="text-lg font-medium leading-snug">Pet_age :</p>
-                  <p className="leading-snug">{age}</p>
+                <div className="flex gap-5 ">
+                  <p className="text-lg font-medium leading-snug">
+                    Maximum donation amount :
+                    <span className="text-base font-normal">
+                      {maxDonationAmount}
+                    </span>
+                  </p>
                 </div>
               </div>
-              <div className="flex items-center space-x-2 sm:space-x-4">
+              <div className="flex space-x-2 sm:space-x-4 ">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -135,11 +101,13 @@ const PetDetails = () => {
                     d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
                   ></path>
                 </svg>
-                <div className="flex gap-5 items-center ">
+                <div className="flex gap-5 ">
                   <p className="text-lg font-medium leading-snug">
-                    Pet_location :
+                    Donation last date :
+                    <span className="text-base font-normal">
+                      {formattedDate}
+                    </span>
                   </p>
-                  <p className="leading-snug">{location}</p>
                 </div>
               </div>
               <div className="flex space-x-2 sm:space-x-4">
@@ -190,99 +158,35 @@ const PetDetails = () => {
                   </p>
                 </div>
               </div>
-              <div className="flex space-x-2 sm:space-x-4 pb-8">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  className="flex-shrink-0 w-6 h-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
-                  ></path>
-                </svg>
-                <div className="flex gap-5 ">
-                  <p className="text-lg font-medium leading-snug">
-                    Published_date :
-                    <span className="text-base font-normal">
-                      {formattedDate}
-                    </span>
-                  </p>
-                </div>
-              </div>
-              <div className="text-center mt-10">
-                <Button
-                  className="btn bg-[#3498db] text-white"
-                  onClick={handleOpen}
-                >
-                  Adopt
-                </Button>
-              </div>
+              <button
+                className="btn"
+                onClick={() =>
+                  document.getElementById("my_modal_5").showModal()
+                }
+              >
+                open modal
+              </button>
             </div>
           </div>
         </section>
       </div>
-      <Dialog open={open} handler={handleOpen} size="sm">
-        <DialogHeader>Pet Name : {name}</DialogHeader>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <DialogBody
-            divider
-            className="grid grid-cols-1 gap-6 overflow-y-auto max-h-96"
-          >
-            <div>
-              <p className="text-sm font-medium leading-snug">User Name</p>
-              <Input
-                type="text"
-                name="name"
-                value={user.displayName}
-                disabled
-              />
-            </div>
-            <div>
-              <p className="text-sm font-medium leading-snug">User Email</p>
-              <Input type="email" name="email" value={user.email} disabled />
-            </div>
-            <div>
-              <p className="text-sm font-medium leading-snug">Phone Number</p>
-              <Input
-                type="tel"
-                name="phoneNumber"
-                required
-                {...register("phoneNumber", { required: true })}
-              />
-            </div>
-            <div>
-              <p className="text-sm font-medium leading-snug">Address</p>
-              <Input
-                type="text"
-                name="address"
-                required
-                {...register("address", { required: true })}
-              />
-            </div>
-          </DialogBody>
-          <DialogFooter>
-            <Button
-              variant="text"
-              color="red"
-              onClick={handleOpen}
-              className="mr-1"
-            >
-              <span>Cancel</span>
-            </Button>
-            <Button type="submit" className="bg-blue-300">
-              <span>Submit</span>
-            </Button>
-          </DialogFooter>
-        </form>
-      </Dialog>
-      <ToastContainer></ToastContainer>
+      <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+        <div className="modal-box">
+          <div>
+            <Elements stripe={stripePromise}>
+              <CheckoutForm></CheckoutForm>
+            </Elements>
+          </div>
+          <div className="modal-action">
+            <form method="dialog">
+              {/* if there is a button in form, it will close the modal */}
+              <button className="btn">Close</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
     </div>
   );
 };
 
-export default PetDetails;
+export default DonationDetails;
