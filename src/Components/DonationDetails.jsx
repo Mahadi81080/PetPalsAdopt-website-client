@@ -12,6 +12,7 @@ const DonationDetails = () => {
     shortDescription,
     lastDate,
     maxDonationAmount,
+    donation,
   } = useLoaderData();
   // Convert the ISO date string to a JavaScript Date object
   const dateObj = new Date(lastDate);
@@ -158,12 +159,18 @@ const DonationDetails = () => {
                 </div>
               </div>
               <button
-                className="btn"
-                onClick={() =>
-                  document.getElementById("my_modal_5").showModal()
+                className={
+                  donation
+                    ? "bg-blue-300 text-white px-2 py-2 rounded-md"
+                    : "disabled bg-gray-400 px-2 py-1 rounded-md text-white"
                 }
+                onClick={() => {
+                  if (donation) {
+                    document.getElementById("my_modal_5").showModal();
+                  }
+                }}
               >
-                open modal
+              Donation
               </button>
             </div>
           </div>

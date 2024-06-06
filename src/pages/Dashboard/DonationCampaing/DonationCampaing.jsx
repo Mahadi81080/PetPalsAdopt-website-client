@@ -27,6 +27,7 @@ const DonationCampaing = () => {
         lastDate: data.lastDate,
         shortDescription: data.shortDescription,
         longDescription: data.longDescription,
+        donation: true,
         createdAt: new Date().toISOString(),
       };
       const menuRes = await axiosSecure.post("/donation", campaignData);

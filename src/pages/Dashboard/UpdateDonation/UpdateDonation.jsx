@@ -37,6 +37,7 @@ const UpdateDonation = () => {
         longDescription: data.longDescription,
         maxDonationAmount: data.maxDonationAmount,
         lastDate: data.lastDate,
+        donation: true,
         date: new Date().toISOString(),
       };
       const menuRes = await axiosSecure.patch(

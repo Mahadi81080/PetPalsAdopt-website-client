@@ -1,17 +1,30 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const MyDonationCampaing = () => {
   const [axiosSecure] = useAxiosSecure();
-  const { data: donationCampaing = [] } = useQuery({
+  const { data: donationCampaing = [], refetch } = useQuery({
     queryKey: ["donationCampaing"],
     queryFn: async () => {
       const res = await axiosSecure.get("/donation");
       return res.data;
     },
   });
-
+  const handleToggleDonation = (item) => {
+    axiosSecure.patch(`/donationStop/${item._id}`).then((res) => {
+      if (res.data.modifiedCount > 0) {
+        refetch();
+        const message =
+          item.donation
+            ? `${item.name} pet donation stopped!`
+            : `${item.name} pet donation started!`;
+        toast.success(message);
+      }
+    });
+  };
   return (
     <div>
       <div className="flex justify-evenly my-4">
@@ -47,8 +60,15 @@ const MyDonationCampaing = () => {
                   ></progress>
                 </td>
                 <td>
-                  <button className="bg-blue-300 text-white px-2 py-1 rounded-md">
-                    Pause
+                  <button
+                    onClick={() => handleToggleDonation(item)}
+                    className={
+                      item.donation
+                        ? "bg-blue-300 text-white px-2 py-1 rounded-md"
+                        : "bg-gray-400 text-white px-2 py-1 rounded-md"
+                    }
+                  >
+                    {item.donation ? "Pause" : "Resume"}
                   </button>
                 </td>
                 <td>
@@ -60,7 +80,7 @@ const MyDonationCampaing = () => {
                 </td>
                 <td>
                   <button className="bg-blue-300 text-white px-2 py-1 rounded-md">
-                  View Donation
+                    View Donation
                   </button>
                 </td>
               </tr>
@@ -68,6 +88,7 @@ const MyDonationCampaing = () => {
           </tbody>
         </table>
       </div>
+      <ToastContainer></ToastContainer>
     </div>
   );
 };
