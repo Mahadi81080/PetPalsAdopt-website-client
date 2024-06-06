@@ -28,16 +28,6 @@ const PetDetails = () => {
     date,
     _id,
   } = useLoaderData();
-
-  // Convert the ISO date string to a JavaScript Date object
-  const dateObj = new Date(date);
-  // Format the date to a human-readable string
-  const formattedDate = dateObj.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => setOpen(!open);
@@ -208,8 +198,8 @@ const PetDetails = () => {
                 <div className="flex gap-5 ">
                   <p className="text-lg font-medium leading-snug">
                     Published_date :
-                    <span className="text-base font-normal">
-                      {formattedDate}
+                     <span className="text-base font-normal">
+                    {new Date(date).toLocaleDateString()}
                     </span>
                   </p>
                 </div>

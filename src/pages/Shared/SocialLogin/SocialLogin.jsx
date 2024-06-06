@@ -4,22 +4,24 @@ import axios from "axios";
 // import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 
 const SocialLogin = () => {
-  const { googleLogin,facebookLogin } = useAuth();
+  const { googleLogin, facebookLogin } = useAuth();
   //   const axiosPublic = useAxiosPublic()
   const navigate = useNavigate();
   const handleGoogleSingin = () => {
     googleLogin().then((result) => {
       console.log(result.user);
       navigate("/");
-        const userInfo = {
-          email: result.user.email,
-          name: result.user.displayName,
-        };
-        axios.post(`${import.meta.env.VITE_API_URL}/users`,userInfo)
-        .then(res=>{
+      const userInfo = {
+        email: result.user.email,
+        name: result.user.displayName,
+        photo: result.user.photoURL,
+      };
+      axios
+        .post(`${import.meta.env.VITE_API_URL}/users`, userInfo)
+        .then((res) => {
           console.log(res.data);
-          navigate('/')
-        })
+          navigate("/");
+        });
     });
   };
   return (

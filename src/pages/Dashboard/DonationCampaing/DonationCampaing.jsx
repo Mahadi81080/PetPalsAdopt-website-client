@@ -3,10 +3,12 @@ import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import useAuth from "../../../Hooks/useAuth";
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?&key=${image_hosting_key}`;
 
 const DonationCampaing = () => {
+  const {user}=useAuth()
   const { register, handleSubmit, reset } = useForm();
   const axiosPublic = useAxiosPublic();
   const [axiosSecure] = useAxiosSecure();
@@ -22,6 +24,8 @@ const DonationCampaing = () => {
       // now send menu item data to the server with the image
       const campaignData = {
         name:data.name,
+        userName :user.displayName,
+        email:user.email,
         image: res.data.data.display_url,
         maxDonationAmount: data.maxDonationAmount,
         lastDate: data.lastDate,

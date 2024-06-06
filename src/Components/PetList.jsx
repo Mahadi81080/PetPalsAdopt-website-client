@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 const PetList = ({ list }) => {
   console.log(list);
   return (
-    <Card className="   mt-6">
+    <Card className="mt-6">
       <CardHeader
         color="blue-gray"
         className="h-56 flex items-center justify-center"

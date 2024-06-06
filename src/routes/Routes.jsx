@@ -16,6 +16,8 @@ import DonationCampaning from "../pages/DonationCampaining/DonationCampaning";
 import DonationDetails from "../Components/DonationDetails";
 import MyDonationCampaing from "../pages/Dashboard/MyDonation/MyDonationCampaing";
 import UpdateDonation from "../pages/Dashboard/UpdateDonation/UpdateDonation";
+import AdoptRequest from "../pages/Dashboard/AdoptRequest.jsx/AdoptRequest";
+import AllUsers from "../pages/Dashboard/AllUser/AllUsers";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -80,7 +82,10 @@ export const router = createBrowserRouter([
       {
         path: "myAddedPet",
         element: <MyAddedPet></MyAddedPet>,
-        // loader:()=>fetch(`${import.meta.env.VITE_API_URL}/petItem`)
+      },
+      {
+        path: "adoptRequest",
+        element:<AdoptRequest></AdoptRequest>
       },
       {
         path: "update/:id",
@@ -108,6 +113,10 @@ export const router = createBrowserRouter([
       },
 
       // Admin routes
+      {
+        path:"allUsers",
+        element:<AllUsers></AllUsers>
+      }
     ],
   },
 ]);

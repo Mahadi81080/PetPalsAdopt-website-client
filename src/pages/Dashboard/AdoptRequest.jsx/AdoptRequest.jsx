@@ -1,20 +1,27 @@
 import { useQuery } from "@tanstack/react-query";
-import useAuth from "../../../Hooks/useAuth";
+ 
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
-const MyDonation = () => {
-  const { user } = useAuth();
+const AdoptRequest = () => {
   const [axiosSecure] = useAxiosSecure();
-  const { data: myDonations = [] } = useQuery({
-    queryKey: ["myDonations"],
+  const { data: adoptRequestList = [] } = useQuery({
+    queryKey: ["adoptRequestList"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/payments");
+      const res = await axiosSecure.get("/petAdopt");
       return res.data;
     },
   });
-  const currentUserEmail = user.email;
-  const currentList = myDonations.filter(
-    (item) => item.email === currentUserEmail
+  console.log(adoptRequestList);
+  const { data: petListining = [] } = useQuery({
+    queryKey: ["petListining"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/petItem");
+      return res.data;
+    },
+  });
+  console.log(petListining);
+  const currentList = adoptRequestList.filter((request) =>
+    petListining.some((pet) => pet._id === request.petId)
   );
   return (
     <div>
@@ -29,9 +36,12 @@ const MyDonation = () => {
             <tr>
               <th>#</th>
               <th>Pet Image</th>
-              <th>Pet Name</th>
-              <th >Donation Amount</th>
-              <th>Refund</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone Number</th>
+              <th>Location</th>
+              <th>Accept</th>
+              <th>Reject</th>
             </tr>
           </thead>
           <tbody>
@@ -51,11 +61,19 @@ const MyDonation = () => {
                     </div>
                   </div>
                 </td>
-                <td>{item.petName}</td>
-                <td  >{item.price} $</td>
+                <td>{item.userName}</td>
+                <td>{item.email}</td>
+
+                <td>{item.phoneNumber}</td>
+                <td>{item.address}</td>
                 <td>
                   <button className="bg-blue-300 text-white px-2 py-1 rounded-md">
-                    Refund
+                    Accept
+                  </button>
+                </td>
+                <td>
+                  <button className="bg-blue-300 text-white px-2 py-1 rounded-md">
+                    Reject
                   </button>
                 </td>
               </tr>
@@ -67,4 +85,4 @@ const MyDonation = () => {
   );
 };
 
-export default MyDonation;
+export default AdoptRequest;

@@ -4,7 +4,7 @@ import useAxiosSecure from "../Hooks/useAxiosSecure";
 import useAuth from "../Hooks/useAuth";
 import Swal from "sweetalert2";
 
-const CheckoutForm = ({ maxDonationAmount, petName }) => {
+const CheckoutForm = ({ maxDonationAmount, petName, image }) => {
   const { user } = useAuth();
   const [axiosSecure] = useAxiosSecure();
   const [donationAmount, setDonationAmount] = useState("");
@@ -64,12 +64,14 @@ const CheckoutForm = ({ maxDonationAmount, petName }) => {
         // now save the payment information in the database
         const payment = {
           email: user.email,
+          userPhoto: user.photoURL,
+          userName: user.displayName,
           price: donation,
           transactionId: paymentIntent.id,
           date: new Date(),
-          petName:petName,
-          maxDonationAmount:maxDonationAmount,
-          status: "running",
+          petName: petName,
+          image: image,
+          maxDonationAmount: maxDonationAmount,
         };
         const res = await axiosSecure.post("/payments", payment);
         console.log("Payment save", res.data);

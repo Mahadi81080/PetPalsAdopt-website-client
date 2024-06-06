@@ -183,6 +183,7 @@ const DonationDetails = () => {
               <CheckoutForm
                 maxDonationAmount={maxDonationAmount}
                 petName={name}
+                image={image}
               ></CheckoutForm>
             </Elements>
           </div>

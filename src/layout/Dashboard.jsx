@@ -1,8 +1,9 @@
 import { Link, NavLink, Outlet } from "react-router-dom";
-import { TiShoppingCart } from "react-icons/ti";
-import { FaCalendar, FaHome } from "react-icons/fa";
-import { VscPreview } from "react-icons/vsc";
-import { FaList } from "react-icons/fa6";
+import { FaGift, FaHandshake, FaPlusSquare } from "react-icons/fa";
+import { MdOutlineCancel } from "react-icons/md";
+import { AiOutlineHeart } from "react-icons/ai";
+import { IoWalletOutline } from "react-icons/io5";
+import { RiGiftLine } from "react-icons/ri";
 
 const Dashboard = () => {
   // TODO: get isadmin value from the database
@@ -10,15 +11,22 @@ const Dashboard = () => {
   return (
     <div className="flex">
       {/* Dahboard side bar */}
-      <div className="w-72 min-h-screen bg-white shadow-lg">
-        <Link to='/'><h2>home</h2></Link>
-        <ul className="menu text-base-content space-y-5 pl-6 mt-20">
+      <div className="w-72 min-h-screen bg-white shadow-lg pt-10">
+        <div className="flex justify-center items-center gap-8">
+          <h2 className="text-xl font-semibold">USER DASHBOARD</h2>
+          <Link to="/">
+            <MdOutlineCancel className="text-2xl" />
+          </Link>
+        </div>
+
+        <ul className="menu text-base-content space-y-5 pl-6 mt-10">
           <li>
             <NavLink
               to="/dashboard/addItems"
               className="flex items-center gap-3"
             >
-              <FaHome></FaHome>Add a pet
+              <FaPlusSquare />
+              Add a pet
             </NavLink>
           </li>
           <li>
@@ -26,12 +34,17 @@ const Dashboard = () => {
               to="/dashboard/myAddedPet"
               className="flex items-center gap-3"
             >
-              <FaCalendar></FaCalendar>My added pets
+              <FaHandshake />
+              My added pets
             </NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/cart" className="flex items-center gap-3">
-              <TiShoppingCart></TiShoppingCart>Adoption Request
+            <NavLink
+              to="/dashboard/adoptRequest"
+              className="flex items-center gap-3"
+            >
+              <AiOutlineHeart />
+              Adoption Request
             </NavLink>
           </li>
           <li>
@@ -39,7 +52,7 @@ const Dashboard = () => {
               to="/dashboard/donationCamp"
               className="flex items-center gap-3"
             >
-              <VscPreview />
+              <FaGift />
               Create Donation Campaign
             </NavLink>
           </li>
@@ -48,16 +61,16 @@ const Dashboard = () => {
               to="/dashboard/myDonationCamp"
               className="flex items-center gap-3"
             >
-              <FaList />
+              <RiGiftLine />
               My Donation Campaigns
             </NavLink>
           </li>
           <li>
             <NavLink
-              to="/dashboard/paymentHistory"
+              to="/dashboard/myDonation"
               className="flex items-center gap-3"
             >
-              <FaList />
+              <IoWalletOutline />
               My Donations
             </NavLink>
           </li>

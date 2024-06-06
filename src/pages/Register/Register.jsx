@@ -14,7 +14,7 @@ import axios from "axios";
 import useAuth from "../../Hooks/useAuth";
 
 export function Register() {
-  const{creatUser,userUpdateProfile}=useAuth()
+  const { creatUser, userUpdateProfile } = useAuth();
   const navigate = useNavigate();
   const {
     register,
@@ -33,15 +33,18 @@ export function Register() {
             const userInfo = {
               name: data.name,
               email: data.email,
+              photo: data.photoURL,
             };
-            axios.post(`${import.meta.env.VITE_API_URL}/users`, userInfo).then((res) => {
-              if (res.data.insertedId) {
-                console.log("User added to the database");
-                reset();
-                toast.success("Registration successful!");
-                navigate("/");
-              }
-            });
+            axios
+              .post(`${import.meta.env.VITE_API_URL}/users`, userInfo)
+              .then((res) => {
+                if (res.data.insertedId) {
+                  console.log("User added to the database");
+                  reset();
+                  toast.success("Registration successful!");
+                  navigate("/");
+                }
+              });
           })
           .catch((error) => {
             console.log(error);
@@ -75,7 +78,7 @@ export function Register() {
             className="flex flex-col gap-4"
           >
             <Input
-            type="text"
+              type="text"
               label="Name"
               size="lg"
               {...register("name", { required: true })}
@@ -86,13 +89,13 @@ export function Register() {
               </span>
             )}
             <Input
-            type="text"
+              type="text"
               label="Photo_URL"
               size="lg"
               {...register("photo", { required: true })}
             />
             <Input
-            type="email"
+              type="email"
               label="Email"
               size="lg"
               {...register("email", { required: true })}
@@ -103,7 +106,7 @@ export function Register() {
               </span>
             )}
             <Input
-            type="password"
+              type="password"
               label="password"
               size="lg"
               {...register("password", { required: true })}
