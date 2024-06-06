@@ -14,6 +14,8 @@ import PetListining from "../pages/PetListining/PetListining";
 import PetDetails from "../Components/PetDetails";
 import DonationCampaning from "../pages/DonationCampaining/DonationCampaning";
 import DonationDetails from "../Components/DonationDetails";
+import MyDonationCampaing from "../pages/Dashboard/MyDonation/MyDonationCampaing";
+import UpdateDonation from "../pages/Dashboard/UpdateDonation/UpdateDonation";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -32,23 +34,33 @@ export const router = createBrowserRouter([
         element: <Register></Register>,
       },
       {
-        path:"/petList",
-        element:<PetListining></PetListining>
+        path: "/petList",
+        element: <PetListining></PetListining>,
       },
       {
-        path:"/petDetails/:id",
-        element:<PrivateRoute><PetDetails></PetDetails></PrivateRoute>,
-        loader:({params})=>fetch(`${import.meta.env.VITE_API_URL}/petItem/${params.id}`)
+        path: "/petDetails/:id",
+        element: (
+          <PrivateRoute>
+            <PetDetails></PetDetails>
+          </PrivateRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(`${import.meta.env.VITE_API_URL}/petItem/${params.id}`),
       },
       {
-        path:"/donationCampaning",
-        element:<DonationCampaning></DonationCampaning>
+        path: "/donationCampaning",
+        element: <DonationCampaning></DonationCampaning>,
       },
       {
-        path:"/donationDetails/:id",
-        element:<PrivateRoute><DonationDetails></DonationDetails></PrivateRoute>,
-        loader:({params})=>fetch(`${import.meta.env.VITE_API_URL}/donation/${params.id}`)
-      }
+        path: "/donationDetails/:id",
+        element: (
+          <PrivateRoute>
+            <DonationDetails></DonationDetails>
+          </PrivateRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(`${import.meta.env.VITE_API_URL}/donation/${params.id}`),
+      },
     ],
   },
   // dashboard related route
@@ -73,16 +85,27 @@ export const router = createBrowserRouter([
       {
         path: "update/:id",
         element: <UpdateItem></UpdateItem>,
-        loader:({params})=>fetch(`${import.meta.env.VITE_API_URL}/petItem/${params.id}`)
+        loader: ({ params }) =>
+          fetch(`${import.meta.env.VITE_API_URL}/petItem/${params.id}`),
       },
       {
-        path:"donationCamp",
-        element:<DonationCampaing></DonationCampaing>
+        path: "donationCamp",
+        element: <DonationCampaing></DonationCampaing>,
       },
       {
-        path:"myDonation",
-        element:<MyDonation></MyDonation>
-      }
+        path: "myDonationCamp",
+        element: <MyDonationCampaing></MyDonationCampaing>,
+      },
+      {
+        path: "updateDonation/:id",
+        element: <UpdateDonation></UpdateDonation>,
+        loader: ({ params }) =>
+          fetch(`${import.meta.env.VITE_API_URL}/donation/${params.id}`),
+      },
+      {
+        path: "myDonation",
+        element: <MyDonation></MyDonation>,
+      },
 
       // Admin routes
     ],

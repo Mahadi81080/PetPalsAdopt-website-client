@@ -1,11 +1,10 @@
 import { useLoaderData } from "react-router-dom";
- 
+
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
 
 const DonationDetails = () => {
- 
   const {
     name,
     image,
@@ -174,7 +173,10 @@ const DonationDetails = () => {
         <div className="modal-box">
           <div>
             <Elements stripe={stripePromise}>
-              <CheckoutForm></CheckoutForm>
+              <CheckoutForm
+                maxDonationAmount={maxDonationAmount}
+                petName={name}
+              ></CheckoutForm>
             </Elements>
           </div>
           <div className="modal-action">

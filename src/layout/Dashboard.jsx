@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import { TiShoppingCart } from "react-icons/ti";
 import { FaCalendar, FaHome } from "react-icons/fa";
 import { VscPreview } from "react-icons/vsc";
@@ -11,6 +11,7 @@ const Dashboard = () => {
     <div className="flex">
       {/* Dahboard side bar */}
       <div className="w-72 min-h-screen bg-white shadow-lg">
+        <Link to='/'><h2>home</h2></Link>
         <ul className="menu text-base-content space-y-5 pl-6 mt-20">
           <li>
             <NavLink
@@ -44,7 +45,7 @@ const Dashboard = () => {
           </li>
           <li>
             <NavLink
-              to="/dashboard/paymentHistory"
+              to="/dashboard/myDonationCamp"
               className="flex items-center gap-3"
             >
               <FaList />

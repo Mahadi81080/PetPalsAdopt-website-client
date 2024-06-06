@@ -39,7 +39,7 @@ const UpdateItem = () => {
         console.log(menuRes.data);
         if (menuRes.data.modifiedCount>0) {
           reset();
-          toast.success('Youe pet information updated');
+          toast.success('Your pet information updated');
         }
       }
       console.log("with image url", res.data);
