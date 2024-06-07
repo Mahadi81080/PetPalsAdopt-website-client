@@ -13,7 +13,7 @@ const PetCategory = () => {
           do, and we offer a wide range of pet services.
         </p>
       </div>
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-3">
         <div className="p-6 dark:text-gray-900">
           <img
             src={img1}

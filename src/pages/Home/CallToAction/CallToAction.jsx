@@ -3,10 +3,10 @@ import img2 from "../../../assets/CallToAction/karsten-winegeart-NE0XGVKTmcA-uns
 
 const CallToAction = () => {
   return (
-    <div className="flex justify-center gap-10 my-10">
-      <div className="w-1/2 text-left space-y-6 mt-10">
-        <h3 className="text-[#3498db] text-base">WE LOVE OUR JOB!</h3>
-        <h1 className="text-6xl font-bold">
+    <div className="flex flex-col lg:flex-row justify-center gap-10 my-10">
+      <div className="lg:w-1/2 text-left space-y-6 mt-10">
+        <h3 className="text-[#3498db] lg:text-base">WE LOVE OUR JOB!</h3>
+        <h1 className="lg:text-4xl text-6xl font-bold">
           Pet Adoption is <br /> Big and Good <br /> Deed
         </h1>
         <p className="text-[#5b6a76] text-lg">
@@ -27,12 +27,12 @@ const CallToAction = () => {
         </ul>
         <button className="btn bg-[#3498db] px-7 py-3 rounded-md text-white">Learn More</button>
       </div>
-      <div className="w-1/2 relative">
-        <img src={img1} alt="" className="h-full" />
+      <div className="lg:w-1/2 relative">
+        <img src={img1} alt="" className="ml-20 w-72 lg:h-full" />
         <img
           src={img2}
           alt=""
-          className="w-2/3 absolute top-56 -left-32"
+          className=" w-48 lg:w-2/3 absolute top-20 lg:top-56 lg:-left-32"
         />
       </div>
     </div>

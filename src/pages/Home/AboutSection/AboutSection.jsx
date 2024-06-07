@@ -1,12 +1,11 @@
 import { BsDot } from "react-icons/bs";
 import img1 from "../../../assets/About/img1.jpg";
-import img2 from "../../../assets/About/img2.webp";
-import img3 from "../../../assets/About/vecteezy_wool-yarn-logo-icon-design-vector_8326074.jpg";
-import img4 from "../../../assets/About/3109_R1NUIExBUiA0MDQtMTE.jpg";
+import img2 from "../../../assets/About/vecteezy_wool-yarn-logo-icon-design-vector_8326074.jpg";
+import img3 from "../../../assets/About/istockphoto-1347447821-612x612.jpg";
 const AboutSection = () => {
   return (
     <div className="mt-28 my-10">
-      <div className="space-y-4 text-center  mb-10">
+      <div className="space-y-4 text-center mb-10">
         <h3 className="text-[#3498db]">BEST PET CARE</h3>
         <h1 className="text-5xl font-semibold">We Provide Best Services</h1>
         <p className="text-lg text-[#5b6a76]">
@@ -15,8 +14,8 @@ const AboutSection = () => {
           <br /> friends.
         </p>
       </div>
-      <div className="grid grid-cols-4 gap-5">
-        <div className="max-w-xs py-16  border rounded-lg shadow-sm   dark:text-gray-900">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        <div className=" py-16  border rounded-lg shadow-sm bg-white dark:text-gray-900">
           <img
             src={img1}
             alt=""
@@ -37,9 +36,9 @@ const AboutSection = () => {
             <BsDot />
           </div>
         </div>
-        <div className="max-w-xs py-16 border rounded-lg shadow-sm    dark:text-gray-900">
+        <div className=" py-16 border rounded-lg shadow-sm bg-white  dark:text-gray-900">
           <img
-            src={img2}
+            src={img3}
             alt=""
             className="object-cover mx-auto w-20 h-20 bg-white dark:bg-gray-500"
           />
@@ -58,9 +57,9 @@ const AboutSection = () => {
             <BsDot />
           </div>
         </div>
-        <div className="max-w-xs py-16 border rounded-lg shadow-sm    dark:text-gray-900">
+        <div className=" py-16 border rounded-lg shadow-sm bg-white  dark:text-gray-900">
           <img
-            src={img3}
+            src={img2}
             alt=""
             className="object-cover mx-auto w-20 h-20 bg-gray-500 dark:bg-gray-500"
           />
@@ -68,26 +67,6 @@ const AboutSection = () => {
             <h2 className="text-3xl font-semibold tracking-wide">Community</h2>
             <p className="text-xl text-[#5b6a76]  dark:text-gray-800">
               Meet other pet lovers <br /> here
-            </p>
-          </div>
-          <div className="flex justify-center mt-5 text-2xl text-[#5b6a76]">
-            <BsDot />
-            <BsDot />
-            <BsDot />
-          </div>
-        </div>
-        <div className="max-w-xs py-16 border rounded-lg shadow-sm   dark:text-gray-900">
-          <img
-            src={img4}
-            alt=""
-            className="object-cover mx-auto w-20 h-20 bg-gray-500 dark:bg-gray-500"
-          />
-          <div className="mt-6 mb-1 text-center">
-            <h2 className="text-3xl font-semibold tracking-wide">
-              Online Store
-            </h2>
-            <p className="text-xl text-[#5b6a76]  dark:text-gray-800">
-              Quality products for <br /> pets
             </p>
           </div>
           <div className="flex justify-center mt-5 text-2xl text-[#5b6a76]">
