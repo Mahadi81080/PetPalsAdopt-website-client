@@ -2,11 +2,12 @@ import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const Newslatter = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit,reset } = useForm();
   const onSubmit = (data) => {
     const { email } = data;
     if (email) {
       toast.success("Thank you for subscribing to our newslatter !");
+      reset()
     } else {
       toast.error("Something went wrong.");
     }

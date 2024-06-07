@@ -10,10 +10,12 @@ import {
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import auth from "../Firebase/firebase.config";
-import axios from "axios";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
+
 
 export const AuthContext = createContext(null);
 const AuthProviders = ({ children }) => {
+  const axiosPublic=useAxiosPublic()
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const googleProvider = new GoogleAuthProvider();
@@ -25,31 +27,27 @@ const AuthProviders = ({ children }) => {
   };
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-      const userEmail = currentUser?.email || user?.email;
-      const loggedUser = { email: userEmail };
       setUser(currentUser);
-      console.log("Current User", currentUser);
       if (currentUser) {
-        axios
-          .post(`${import.meta.env.VITE_API_URL}/jwt`, loggedUser, {
-            withCredentials: true,
-          })
-          .then((res) => {
-            console.log("Token response", res.data);
-          });
+        // get token and store client
+        const userInfo = { email: currentUser.email };
+        axiosPublic.post("/jwt", userInfo).then((res) => {
+          if (res.data.token) {
+            localStorage.setItem("access-token", res.data.token);
+            setLoading(false);
+          }
+        });
+      } else {
+        // remove token
+        localStorage.removeItem("access-token");
+        setLoading(false);
       }
-      else{
-        axios.post(`${import.meta.env.VITE_API_URL}/logout`,loggedUser,{withCredentials:true})
-        .then(res=>{
-            console.log(res.data);
-        })
-      }
-      setLoading(false);
+      console.log("Current user", currentUser);
     });
     return () => {
-     return unSubscribe();
+      return unSubscribe;
     };
-  }, [user?.email]);
+  }, [axiosPublic]);
   //   Sing In
   const singIn = (email, password) => {
     setLoading(true);
@@ -84,7 +82,7 @@ const AuthProviders = ({ children }) => {
     logOut,
     userUpdateProfile,
     googleLogin,
-    facebookLogin
+    facebookLogin,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

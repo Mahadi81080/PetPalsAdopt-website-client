@@ -22,7 +22,7 @@ const PetListining = () => {
           for you.
         </p>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-7">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-7">
         {petListining.map((list) => (
           <PetList key={list._id} list={list}></PetList>
         ))}

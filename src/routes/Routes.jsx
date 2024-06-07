@@ -18,6 +18,7 @@ import MyDonationCampaing from "../pages/Dashboard/MyDonation/MyDonationCampaing
 import UpdateDonation from "../pages/Dashboard/UpdateDonation/UpdateDonation";
 import AdoptRequest from "../pages/Dashboard/AdoptRequest.jsx/AdoptRequest";
 import AllUsers from "../pages/Dashboard/AllUser/AllUsers";
+import AllPets from "../pages/Dashboard/AllPets/AllPets";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -116,6 +117,10 @@ export const router = createBrowserRouter([
       {
         path:"allUsers",
         element:<AllUsers></AllUsers>
+      },
+      {
+        path:"allPets",
+        element:<AllPets></AllPets>
       }
     ],
   },

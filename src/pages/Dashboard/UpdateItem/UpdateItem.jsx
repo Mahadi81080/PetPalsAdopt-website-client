@@ -4,46 +4,65 @@ import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?&key=${image_hosting_key}`;
 
 const UpdateItem = () => {
-  const { name, category, age, shortDescription, longDescription, location,_id } =
-    useLoaderData();
+  const { name, category, age, shortDescription, longDescription, location, image, _id } = useLoaderData();
   
-    const axiosPublic = useAxiosPublic();
-    const [axiosSecure] = useAxiosSecure();
+  const axiosPublic = useAxiosPublic();
+  const [axiosSecure] = useAxiosSecure();
 
-  const { register, handleSubmit,reset } = useForm();
+  const { register, handleSubmit, reset } = useForm();
+
   const onSubmit = async (data) => {
-    const imageFile = { image: data.image[0] };
-    const res = await axiosPublic.post(image_hosting_api, imageFile, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    if (res.data.success) {
-        // now send menu item data to the server with the image
-        const petItem = {
-          name: data.name,
-          category: data.category,
-          age: data.age,
-          location: data.location,
-          image: res.data.data.display_url,
-          shortDescription: data.short_description,
-          longDescription: data.long_description,
-          date: new Date().toISOString(),
-          adopted: false,
-        };
-        const menuRes = await axiosSecure.patch(`/petItem/${_id}`, petItem);
-        console.log(menuRes.data);
-        if (menuRes.data.modifiedCount>0) {
-          reset();
-          toast.success('Your pet information updated');
-        }
+    let imageUrl;
+
+    if (data.image && data.image[0]) {
+      // New image file provided, upload it
+      const imageFile = new FormData();
+      imageFile.append("image", data.image[0]);
+
+      const res = await axiosPublic.post(image_hosting_api, imageFile, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (res.data.success) {
+        imageUrl = res.data.data.display_url;
+      } else {
+        toast.error('Image upload failed');
+        return;
       }
-      console.log("with image url", res.data);
+    } else {
+      // No new image file provided, use existing image URL
+      imageUrl = image;
+    }
+
+    // Now send the updated pet item data to the server with the image URL
+    const petItem = {
+      name: data.name,
+      category: data.category,
+      age: data.age,
+      location: data.location,
+      image: imageUrl,
+      shortDescription: data.short_description,
+      longDescription: data.long_description,
+      date: new Date().toISOString(),
+      adopted: false,
+    };
+
+    const menuRes = await axiosSecure.patch(`/petItem/${_id}`, petItem);
+    console.log(menuRes.data);
+
+    if (menuRes.data.modifiedCount > 0) {
+      reset();
+      toast.success('Your pet information updated');
+    }
   };
+
   return (
     <div>
       <form
@@ -70,16 +89,13 @@ const UpdateItem = () => {
               <span className="label-text">Pet Category*</span>
             </div>
             <select
-              defaultValue="default"
+              defaultValue={category}
               className="select select-bordered w-full"
               {...register("category", { required: true })}
             >
-              <option disabled value={category}>
-                Category
-              </option>
               <option value="Cats">Cats </option>
-              <option value="Dogs">Docs</option>
-              <option value="Rabit">Rabbit</option>
+              <option value="Dogs">Dogs</option>
+              <option value="Rabbit">Rabbit</option>
               <option value="Fish">Fish</option>
               <option value="Bird">Bird</option>
             </select>
@@ -133,12 +149,12 @@ const UpdateItem = () => {
         </label>
         <div>
           <input
-            {...register("image", { required: true })}
+            {...register("image")}
             type="file"
             className="file-input w-full max-w-xs"
           />
         </div>
-        <button className="btn bg-[#3498db] text-white">Add a Pet</button>
+        <button className="btn bg-[#3498db] text-white">Update Your Post</button>
       </form>
       <ToastContainer></ToastContainer>
     </div>

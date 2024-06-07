@@ -36,6 +36,7 @@ const AddItems = () => {
         email: user.email,
         userName: user.displayName,
       };
+      console.log(petItem);
       const menuRes = await axiosSecure.post("/petItem", petItem);
       console.log(menuRes.data);
       if (menuRes.data.insertedId) {
