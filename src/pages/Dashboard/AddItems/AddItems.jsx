@@ -4,7 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import useAuth from "../../../Hooks/useAuth";
-import  { useState } from "react";
+import { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { htmlToText } from "html-to-text";
@@ -28,10 +28,7 @@ const AddItems = () => {
       },
     });
     if (res.data.success) {
-      // HTML থেকে টেক্সট এক্সট্র্যাক্ট করা
       const textDescription = htmlToText(longDescription);
-
-      // পোষ্য আইটেমের ডাটা সার্ভারে পাঠানো
       const petItem = {
         name: data.name,
         category: data.category,
@@ -51,7 +48,7 @@ const AddItems = () => {
       if (menuRes.data.insertedId) {
         reset();
         toast.success(`${data.name} is added this Pet`);
-        setLongDescription(""); // ReactQuill এর কনটেন্ট রিসেট করা
+        setLongDescription("");
       }
     }
     console.log("with image url", res.data);
@@ -63,6 +60,9 @@ const AddItems = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="bg-[#f3f3f3] w-[850px] p-20 mx-auto space-y-4"
       >
+        <div className="text-center mb-8">
+          <h2 className="text-3xl">Add Your Pet</h2>
+        </div>
         <label className="form-control w-full">
           <div className="label">
             <span className="label-text">Pet name*</span>
@@ -97,7 +97,7 @@ const AddItems = () => {
 
           <label className="form-control w-full">
             <div className="label">
-              <span className="label-text">Pet age*</span>
+              <span className="label-text">Pet age(month)*</span>
             </div>
             <input
               type="text"

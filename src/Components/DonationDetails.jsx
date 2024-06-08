@@ -81,7 +81,7 @@ const DonationDetails = () => {
                   <p className="text-lg font-medium leading-snug">
                     Maximum donation amount :
                     <span className="text-base font-normal">
-                      {maxDonationAmount}
+                      {maxDonationAmount} $
                     </span>
                   </p>
                 </div>

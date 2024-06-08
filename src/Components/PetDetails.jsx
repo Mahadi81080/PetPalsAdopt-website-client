@@ -111,7 +111,7 @@ const PetDetails = () => {
                 </svg>
                 <div className="flex gap-5 items-center ">
                   <p className="text-lg font-medium leading-snug">Pet_age :</p>
-                  <p className="leading-snug">{age}</p>
+                  <p className="leading-snug">{age} month</p>
                 </div>
               </div>
               <div className="flex items-center space-x-2 sm:space-x-4">

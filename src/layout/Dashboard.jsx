@@ -20,7 +20,7 @@ const Dashboard = () => {
       {/* Dahboard side bar */}
       <div
         data-aos="fade-right"
-        data-aos-duration="2000"
+        data-aos-duration="1000"
         className="md:w-60 lg:w-72 min-h-screen bg-[#3498db] shadow-lg pt-10"
       >
         <div className="flex justify-center items-center gap-8">

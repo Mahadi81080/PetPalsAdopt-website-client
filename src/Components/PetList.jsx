@@ -21,14 +21,14 @@ const PetList = ({ list }) => {
 
       <CardBody>
         <Typography variant="h5" color="blue-gray" className="mb-2">
-          {list.name}
+          Pet Name : {list.name}
         </Typography>
-        <Typography className="flex justify-between text-base">
+        <Typography className="  text-base">
           <h3>
             <span className="font-semibold">Location :</span> {list.location}
           </h3>
           <h3>
-            <span className="font-semibold">Age :</span> {list.age}
+            <span className="font-semibold">Age :</span> {list.age} month
           </h3>
         </Typography>
       </CardBody>
