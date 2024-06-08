@@ -7,7 +7,7 @@ Welcome to the PetPalsAdopt website! This project aims to connect potential pet 
 
 ## Open Your Browser
 
-To get started with PetPalsAdopt, simply visit our live site [here](https://book-vibe-80.netlify.app/sing) and enjoying all the features our website.
+To get started with PetPalsAdopt, simply visit our live site [here](https://petpalsadopt-website.web.app) and enjoying all the features our website.
 
 ### Features of PetPalsAdopt
 
