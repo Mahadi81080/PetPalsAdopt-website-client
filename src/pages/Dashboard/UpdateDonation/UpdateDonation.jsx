@@ -15,6 +15,7 @@ const UpdateDonation = () => {
     shortDescription,
     longDescription,
     _id,
+    image
   } = useLoaderData();
 
   const axiosPublic = useAxiosPublic();
@@ -22,35 +23,51 @@ const UpdateDonation = () => {
 
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = async (data) => {
-    const imageFile = { image: data.image[0] };
-    const res = await axiosPublic.post(image_hosting_api, imageFile, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    if (res.data.success) {
-      // now send menu item data to the server with the image
-      const updateDonationInfo = {
-        name: data.name,
-        image: res.data.data.display_url,
-        shortDescription: data.shortDescription,
-        longDescription: data.longDescription,
-        maxDonationAmount: data.maxDonationAmount,
-        lastDate: data.lastDate,
-        donation: true,
-        date: new Date().toISOString(),
-      };
-      const menuRes = await axiosSecure.patch(
-        `/donation/${_id}`,
-        updateDonationInfo
-      );
-      console.log(menuRes.data);
-      if (menuRes.data.modifiedCount > 0) {
-        reset();
-        toast.success("Your Donation Campaing information Updated");
+    let imageUrl;
+
+    if (data.image && data.image[0]) {
+      // New image file provided, upload it
+      const imageFile = new FormData();
+      imageFile.append("image", data.image[0]);
+
+      const res = await axiosPublic.post(image_hosting_api, imageFile, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (res.data.success) {
+        imageUrl = res.data.data.display_url;
+      } else {
+        toast.error("Image upload failed");
+        return;
       }
+    } else {
+      // No new image file provided, use existing image URL
+      imageUrl = image;
     }
-    console.log("with image url", res.data);
+
+    // Now send the updated pet item data to the server with the image URL
+    const updateDonationInfo = {
+      name: data.name,
+      image: imageUrl,
+      shortDescription: data.shortDescription,
+      longDescription: data.longDescription,
+      maxDonationAmount: data.maxDonationAmount,
+      lastDate: data.lastDate,
+      donation: true,
+      date: new Date().toISOString(),
+    };
+
+    const menuRes = await axiosSecure.patch(
+      `/donation/${_id}`,
+      updateDonationInfo
+    );
+
+    if (menuRes.data.modifiedCount > 0) {
+      reset();
+      toast.success("Your Donation Campaing information Updated");
+    }
   };
   return (
     <div>
@@ -129,7 +146,7 @@ const UpdateDonation = () => {
           <input
             type="file"
             className="file-input w-full max-w-xs"
-            {...register("image", { required: true })}
+            {...register("image")}
           />
         </label>
         <button type="submit" className="btn bg-[#3498db] text-white">

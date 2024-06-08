@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import DonationList from "../../Components/DonationList";
+import { Helmet } from "react-helmet-async";
 
 const DonationCampaning = () => {
   const axiosPublic = useAxiosPublic();
@@ -16,6 +17,9 @@ const DonationCampaning = () => {
   });
   return (
     <div className="mt-24 my-8 mx-10">
+       <Helmet>
+        <title>Donation Campaigns </title>
+      </Helmet>
       <div className="text-center space-y-3 mb-8">
         <h2 className="text-4xl font-bold">
           Support Our Cause <br /> Donate to <span className="text-blue-300">Help Pets</span> in Need <span style={{ color: 'blue' }}>🐾</span>

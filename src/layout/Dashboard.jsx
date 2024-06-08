@@ -1,18 +1,28 @@
 import { Link, NavLink, Outlet } from "react-router-dom";
-import { FaGift, FaHandshake, FaPlusSquare } from "react-icons/fa";
-import { MdOutlineCancel } from "react-icons/md";
+import {
+  FaGift,
+  FaHandshake,
+  FaHome,
+  FaPlusSquare,
+  FaUserAlt,
+} from "react-icons/fa";
+import { MdOutlineCancel, MdOutlinePets } from "react-icons/md";
 import { AiOutlineHeart } from "react-icons/ai";
 import { IoWalletOutline } from "react-icons/io5";
 import { RiGiftLine } from "react-icons/ri";
 import useAdmin from "../Components/useAdmin";
-
+import { IoMdMenu } from "react-icons/io";
 const Dashboard = () => {
   // TODO: get isadmin value from the database
   const [isAdmin] = useAdmin();
   return (
     <div className="flex">
       {/* Dahboard side bar */}
-      <div className="md:w-60 lg:w-72 min-h-screen bg-white shadow-lg pt-10">
+      <div
+        data-aos="fade-right"
+        data-aos-duration="2000"
+        className="md:w-60 lg:w-72 min-h-screen bg-[#3498db] shadow-lg pt-10"
+      >
         <div className="flex justify-center items-center gap-8">
           {isAdmin ? (
             <>
@@ -44,7 +54,7 @@ const Dashboard = () => {
                   to="/dashboard/allUsers"
                   className="flex items-center gap-3"
                 >
-                  <FaPlusSquare />
+                  <FaUserAlt />
                   All Users
                 </NavLink>
               </li>
@@ -53,8 +63,17 @@ const Dashboard = () => {
                   to="/dashboard/allPets"
                   className="flex items-center gap-3"
                 >
-                  <FaPlusSquare />
+                  <MdOutlinePets />
                   All Pets
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/allDonationCamp"
+                  className="flex items-center gap-3"
+                >
+                  <RiGiftLine />
+                  All Donations Campaing
                 </NavLink>
               </li>
             </>
@@ -116,6 +135,24 @@ const Dashboard = () => {
               </li>
             </>
           )}
+          <div className="divider"></div>
+          <li>
+            <NavLink to="/">
+              <FaHome></FaHome>HOME
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/petList">
+              <IoMdMenu />
+              Pet Listing
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/donationCampaning">
+              <RiGiftLine />
+              Donation Campaign Page
+            </NavLink>
+          </li>
         </ul>
       </div>
       {/* Dashboard content */}

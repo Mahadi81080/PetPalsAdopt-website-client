@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import PetList from "../../Components/PetList";
+import { Helmet } from "react-helmet-async";
 
 const PetListining = () => {
   const axiosPublic = useAxiosPublic();
@@ -13,6 +14,9 @@ const PetListining = () => {
   });
   return (
     <div className="mt-24 mb-8 mx-10">
+      <Helmet>
+        <title>PetListining__</title>
+      </Helmet>
       <div className="text-center space-y-3 mb-8">
         <h2 className="text-4xl font-bold">Find Your Perfect Pet</h2>
         <p className="text-lg max-w-3xl mx-auto text-[#5b6a76]">

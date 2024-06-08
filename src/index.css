@@ -7,3 +7,9 @@
   background-size: cover;
   background-repeat: no-repeat;
 }
+.accordion-img{
+  background-image: url("../src/assets/banner/istockphoto-1439233562-612x612.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}

@@ -1,5 +1,5 @@
 import img1 from "../../../assets/banner/group-nine-dogs-front-white-260nw-685669324.jpg";
-import img2 from "../../../assets/banner/istockphoto-1439233562-612x612.jpg";
+import img2 from "../../../assets/banner/blog.jpg";
 import img3 from "../../../assets/banner/1661487582169.png";
 import { Button, Carousel } from "@material-tailwind/react";
 
@@ -18,7 +18,9 @@ const Banner = () => {
               <h3 className=" text-base md:text-xl lg:text-xl text-blue-300">
                 Your Pet is Home Away From Home
               </h3>
-              <h1 className="text-5xl md:text-6xl lg:text-6xl font-bold">Exceptional Pet Boarding</h1>
+              <h1 className="text-5xl md:text-6xl lg:text-6xl font-bold">
+                Exceptional Pet Boarding
+              </h1>
               <p>
                 Ensure your pet's comfort and safety while you're away. Trust us
                 to provide top-notch care.

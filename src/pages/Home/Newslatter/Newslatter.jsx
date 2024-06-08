@@ -2,12 +2,12 @@ import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const Newslatter = () => {
-  const { register, handleSubmit,reset } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const onSubmit = (data) => {
     const { email } = data;
     if (email) {
       toast.success("Thank you for subscribing to our newslatter !");
-      reset()
+      reset();
     } else {
       toast.error("Something went wrong.");
     }
@@ -27,12 +27,12 @@ const Newslatter = () => {
           animals in need!
         </p>
       </div>
-      <div className="w-full bg-gray-500 dark:bg-gray-500 bg-[url('https://source.unsplash.com/random/640x480')] bg-center bg-cover bg-blend-multiply rounded-md">
+      <div className="w-full bg-gray-300 dark:bg-gray-500 bg-[url('https://source.unsplash.com/random/640x480')] bg-center bg-cover bg-blend-multiply rounded-md">
         <div className="container flex flex-col flex-wrap content-center justify-center p-4 py-20 mx-auto md:p-10">
-          <h1 className="text-5xl antialiased font-semibold leading-none text-center text-gray-400 dark:text-white">
+          <h1 className="text-5xl antialiased font-semibold leading-none text-center text-gray-500 dark:text-white">
             Get Our Updates
           </h1>
-          <p className="pt-2 pb-8 text-xl antialiased text-center text-gray-100 dark:text-white">
+          <p className="pt-2 pb-8 text-xl antialiased text-center text-gray-200 dark:text-white">
             Find out about events and other news
           </p>
           <form onSubmit={handleSubmit(onSubmit)} className="flex flex-row">
@@ -45,7 +45,7 @@ const Newslatter = () => {
             <input
               type="submit"
               value="Subscribe"
-              className="w-2/5 p-3 font-semibold rounded-r-lg sm:w-1/3 bg-blue-300 dark:bg-blue-300 text-white dark:text-gray-50"
+              className="w-2/5 p-3 font-semibold rounded-r-lg sm:w-1/3 bg-blue-400 dark:bg-blue-400 text-white dark:text-gray-50"
             />
           </form>
         </div>

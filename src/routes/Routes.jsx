@@ -19,6 +19,8 @@ import UpdateDonation from "../pages/Dashboard/UpdateDonation/UpdateDonation";
 import AdoptRequest from "../pages/Dashboard/AdoptRequest.jsx/AdoptRequest";
 import AllUsers from "../pages/Dashboard/AllUser/AllUsers";
 import AllPets from "../pages/Dashboard/AllPets/AllPets";
+import AllDonationCamp from "../pages/Dashboard/AllDonationCamp/AllDonationCamp";
+import AdminRoute from "./AdminRoute";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -116,11 +118,15 @@ export const router = createBrowserRouter([
       // Admin routes
       {
         path:"allUsers",
-        element:<AllUsers></AllUsers>
+        element:<AdminRoute><AllUsers></AllUsers></AdminRoute>
       },
       {
         path:"allPets",
-        element:<AllPets></AllPets>
+        element:<AdminRoute><AllPets></AllPets></AdminRoute>
+      },
+      {
+        path:"allDonationCamp",
+        element:<AdminRoute><AllDonationCamp></AllDonationCamp></AdminRoute>
       }
     ],
   },

@@ -4,6 +4,11 @@ import "react-toastify/dist/ReactToastify.css";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import useAuth from "../../../Hooks/useAuth";
+import  { useState } from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import { htmlToText } from "html-to-text";
+
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?&key=${image_hosting_key}`;
 
@@ -12,6 +17,7 @@ const AddItems = () => {
   const { register, handleSubmit, reset } = useForm();
   const axiosPublic = useAxiosPublic();
   const [axiosSecure] = useAxiosSecure();
+  const [longDescription, setLongDescription] = useState("");
 
   const onSubmit = async (data) => {
     console.log(data);
@@ -22,7 +28,10 @@ const AddItems = () => {
       },
     });
     if (res.data.success) {
-      // now send menu item data to the server with the image
+      // HTML থেকে টেক্সট এক্সট্র্যাক্ট করা
+      const textDescription = htmlToText(longDescription);
+
+      // পোষ্য আইটেমের ডাটা সার্ভারে পাঠানো
       const petItem = {
         name: data.name,
         category: data.category,
@@ -30,7 +39,7 @@ const AddItems = () => {
         location: data.location,
         image: res.data.data.display_url,
         shortDescription: data.short_description,
-        longDescription: data.long_description,
+        longDescription: textDescription,
         date: new Date().toISOString(),
         adopted: false,
         email: user.email,
@@ -42,10 +51,12 @@ const AddItems = () => {
       if (menuRes.data.insertedId) {
         reset();
         toast.success(`${data.name} is added this Pet`);
+        setLongDescription(""); // ReactQuill এর কনটেন্ট রিসেট করা
       }
     }
     console.log("with image url", res.data);
   };
+
   return (
     <div>
       <form
@@ -77,7 +88,7 @@ const AddItems = () => {
                 Category
               </option>
               <option value="Cats">Cats </option>
-              <option value="Dogs">Docs</option>
+              <option value="Dogs">Dogs</option>
               <option value="Rabit">Rabbit</option>
               <option value="Fish">Fish</option>
               <option value="Bird">Bird</option>
@@ -124,11 +135,12 @@ const AddItems = () => {
           <div className="label">
             <span className="label-text">Long Description*</span>
           </div>
-          <textarea
-            className="textarea textarea-bordered h-32"
+          <ReactQuill
+            value={longDescription}
+            onChange={setLongDescription}
+            className="bg-white"
             placeholder="Type here"
-            {...register("long_description", { required: true })}
-          ></textarea>
+          />
         </label>
         <label className="form-control w-full">
           <div className="label">

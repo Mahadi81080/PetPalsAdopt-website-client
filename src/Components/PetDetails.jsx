@@ -13,6 +13,7 @@ import useAuth from "../Hooks/useAuth";
 import useAxiosPublic from "../Hooks/useAxiosPublic";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Helmet } from "react-helmet-async";
 
 const PetDetails = () => {
   const { user } = useAuth();
@@ -47,7 +48,7 @@ const PetDetails = () => {
     console.log(menuRes.data);
     if (menuRes.data.insertedId) {
       reset();
-      toast.success('Submitted your adopt request');
+      toast.success("Submitted your adopt request");
     }
     reset();
   };
@@ -55,6 +56,9 @@ const PetDetails = () => {
   return (
     <div>
       <div className="mt-20 mx-10">
+        <Helmet>
+          <title>Pet Listing || Pet Details</title>
+        </Helmet>
         <div className="bg-[#b9e8f4] p-20 mb-4 text-center font-extrabold text-3xl">
           <h2>Pet Details</h2>
         </div>
@@ -198,8 +202,8 @@ const PetDetails = () => {
                 <div className="flex gap-5 ">
                   <p className="text-lg font-medium leading-snug">
                     Published_date :
-                     <span className="text-base font-normal">
-                    {new Date(date).toLocaleDateString()}
+                    <span className="text-base font-normal">
+                      {new Date(date).toLocaleDateString()}
                     </span>
                   </p>
                 </div>

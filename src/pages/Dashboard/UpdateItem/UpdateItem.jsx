@@ -4,15 +4,28 @@ import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ReactQuill from "react-quill";
+import { useState } from "react";
+import { htmlToText } from "html-to-text";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?&key=${image_hosting_key}`;
 
 const UpdateItem = () => {
-  const { name, category, age, shortDescription, longDescription, location, image, _id } = useLoaderData();
-  
+  const {
+    name,
+    category,
+    age,
+    shortDescription,
+    longDescription,
+    location,
+    image,
+    _id,
+  } = useLoaderData();
+
   const axiosPublic = useAxiosPublic();
   const [axiosSecure] = useAxiosSecure();
+  const [longDescriptions, setLongDescriptions] = useState("");
 
   const { register, handleSubmit, reset } = useForm();
 
@@ -33,14 +46,14 @@ const UpdateItem = () => {
       if (res.data.success) {
         imageUrl = res.data.data.display_url;
       } else {
-        toast.error('Image upload failed');
+        toast.error("Image upload failed");
         return;
       }
     } else {
       // No new image file provided, use existing image URL
       imageUrl = image;
     }
-
+    const textDescription = htmlToText(longDescriptions);
     // Now send the updated pet item data to the server with the image URL
     const petItem = {
       name: data.name,
@@ -49,7 +62,7 @@ const UpdateItem = () => {
       location: data.location,
       image: imageUrl,
       shortDescription: data.short_description,
-      longDescription: data.long_description,
+      longDescription: textDescription,
       date: new Date().toISOString(),
       adopted: false,
     };
@@ -59,7 +72,7 @@ const UpdateItem = () => {
 
     if (menuRes.data.modifiedCount > 0) {
       reset();
-      toast.success('Your pet information updated');
+      toast.success("Your pet information updated");
     }
   };
 
@@ -141,11 +154,12 @@ const UpdateItem = () => {
           <div className="label">
             <span className="label-text">Long Description*</span>
           </div>
-          <textarea
-            className="textarea textarea-bordered h-32"
+          <ReactQuill
             defaultValue={longDescription}
-            {...register("long_description", { required: true })}
-          ></textarea>
+            onChange={setLongDescriptions}
+            className="bg-white"
+            placeholder="Type here"
+          />
         </label>
         <div>
           <input
@@ -154,7 +168,9 @@ const UpdateItem = () => {
             className="file-input w-full max-w-xs"
           />
         </div>
-        <button className="btn bg-[#3498db] text-white">Update Your Post</button>
+        <button className="btn bg-[#3498db] text-white">
+          Update Your Post
+        </button>
       </form>
       <ToastContainer></ToastContainer>
     </div>

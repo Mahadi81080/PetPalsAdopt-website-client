@@ -149,7 +149,7 @@ const DonationDetails = () => {
                     d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
                   ></path>
                 </svg>
-                <div className="flex gap-5 ">
+                <div className="flex gap-5 mb-8">
                   <p className="text-lg font-medium leading-snug">
                     Long_description :{" "}
                     <span className="text-base font-normal">
@@ -158,20 +158,22 @@ const DonationDetails = () => {
                   </p>
                 </div>
               </div>
-              <button
-                className={
-                  donation
-                    ? "bg-blue-300 text-white px-2 py-2 rounded-md"
-                    : "disabled bg-gray-400 px-2 py-1 rounded-md text-white"
-                }
-                onClick={() => {
-                  if (donation) {
-                    document.getElementById("my_modal_5").showModal();
+              <div className="text-center">
+                <button
+                  className={
+                    donation
+                      ? "btn bg-[#3498db] text-white "
+                      : "disabled bg-gray-400 btn text-white"
                   }
-                }}
-              >
-              Donation
-              </button>
+                  onClick={() => {
+                    if (donation) {
+                      document.getElementById("my_modal_5").showModal();
+                    }
+                  }}
+                >
+                  Donation
+                </button>
+              </div>
             </div>
           </div>
         </section>
